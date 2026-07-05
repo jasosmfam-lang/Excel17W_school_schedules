@@ -193,6 +193,100 @@
     color:var(--grey-text);
     padding:16px 0 4px;
   }
+
+  /* Calendar view */
+  .cal-wrap{
+    background:var(--white);
+    border-radius:12px;
+    box-shadow:0 1px 3px rgba(0,0,0,0.08);
+    padding:14px;
+    margin-bottom:16px;
+  }
+  .cal-nav{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:10px;
+  }
+  .cal-nav button{
+    background:var(--grey-bg);
+    border:1px solid var(--grey-line);
+    border-radius:8px;
+    width:32px;
+    height:32px;
+    font-size:1rem;
+    cursor:pointer;
+    color:var(--navy);
+  }
+  .cal-nav .cal-month-label{
+    font-weight:700;
+    font-size:1rem;
+    color:var(--navy);
+  }
+  .cal-grid{
+    display:grid;
+    grid-template-columns:repeat(7,1fr);
+    gap:4px;
+  }
+  .cal-weekday{
+    text-align:center;
+    font-size:0.65rem;
+    color:var(--grey-text);
+    text-transform:uppercase;
+    padding-bottom:4px;
+  }
+  .cal-day{
+    aspect-ratio:1;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:flex-start;
+    padding-top:6px;
+    border-radius:8px;
+    font-size:0.8rem;
+    color:var(--navy);
+    cursor:default;
+    position:relative;
+  }
+  .cal-day.empty{visibility:hidden;}
+  .cal-day.has-games{
+    cursor:pointer;
+    background:var(--grey-bg);
+  }
+  .cal-day.has-games:hover{background:var(--grey-line);}
+  .cal-day.today{
+    outline:2px solid var(--navy);
+    outline-offset:-2px;
+    font-weight:700;
+  }
+  .cal-day.selected{
+    background:var(--navy);
+    color:var(--white);
+  }
+  .cal-dots{
+    display:flex;
+    gap:2px;
+    margin-top:3px;
+    flex-wrap:wrap;
+    justify-content:center;
+  }
+  .cal-dot{
+    width:6px;
+    height:6px;
+    border-radius:50%;
+  }
+  .selected-day-heading{
+    font-size:0.85rem;
+    font-weight:700;
+    color:var(--navy);
+    margin:4px 0 10px;
+  }
+  .cal-empty-hint{
+    text-align:center;
+    color:var(--grey-text);
+    font-size:0.82rem;
+    padding:10px 0 2px;
+  }
 </style>
 </head>
 <body>
@@ -206,6 +300,10 @@
     <a class="nfhs-link" href="https://www.nfhsnetwork.com/" target="_blank" rel="noopener">NFHS Network ↗</a>
   </div>
   <div class="filters">
+    <div class="filter-group" id="viewFilters">
+      <button class="chip active" data-view="calendar">🗓 Calendar</button>
+      <button class="chip" data-view="list">📋 List</button>
+    </div>
     <div class="filter-group" id="playerFilters"></div>
     <div class="filter-group" id="timeFilters">
       <button class="chip active" data-range="all">All</button>
@@ -215,7 +313,11 @@
   </div>
 </header>
 
-<main id="scheduleContainer"></main>
+<main>
+  <div id="calendarContainer"></div>
+  <div id="selectedDayContainer"></div>
+  <div id="scheduleContainer"></div>
+</main>
 <div class="status-line" id="statusLine"></div>
 
 <script>
@@ -338,6 +440,10 @@ function g(player, date, time, homeAway, opponent, venue, notes){
 let overrides = {};
 let activePlayer = "all";
 let activeRange = "all";
+let activeView = "calendar";
+let calendarMonth = null; // 0-11
+let calendarYear = null;
+let selectedDate = null; // "YYYY-MM-DD"
 
 async function loadOverrides(){
   if(!OVERRIDES_CSV_URL || OVERRIDES_CSV_URL === "YOUR_OVERRIDES_SHEET_CSV_URL_HERE") return;
@@ -482,16 +588,45 @@ function renderFilters(){
       render();
     });
   });
+
+  document.querySelectorAll("#viewFilters .chip").forEach(chip => {
+    chip.addEventListener("click", () => {
+      activeView = chip.dataset.view;
+      document.querySelectorAll("#viewFilters .chip").forEach(c => c.classList.remove("active"));
+      chip.classList.add("active");
+      document.getElementById("timeFilters").style.display = activeView === "list" ? "flex" : "none";
+      render();
+    });
+  });
 }
 
 let ALL_GAMES = GAMES;
 
+function filteredGames(){
+  return ALL_GAMES.filter(gm => activePlayer === "all" || gm.player === activePlayer);
+}
+
 function render(){
+  const calContainer = document.getElementById("calendarContainer");
+  const dayContainer = document.getElementById("selectedDayContainer");
+  const listContainer = document.getElementById("scheduleContainer");
+
+  if(activeView === "calendar"){
+    listContainer.innerHTML = "";
+    renderCalendar();
+    renderSelectedDay();
+  } else {
+    calContainer.innerHTML = "";
+    dayContainer.innerHTML = "";
+    renderList();
+  }
+}
+
+function renderList(){
   const container = document.getElementById("scheduleContainer");
   container.innerHTML = "";
 
-  let games = ALL_GAMES.filter(gm => {
-    if(activePlayer !== "all" && gm.player !== activePlayer) return false;
+  let games = filteredGames().filter(gm => {
     if(activeRange === "today" && !isToday(gm.date)) return false;
     if(activeRange === "week" && !isThisWeek(gm.date)) return false;
     return true;
@@ -515,6 +650,121 @@ function render(){
     }
     container.appendChild(renderCard(gm));
   });
+}
+
+function ymd(y,m,d){
+  return y + "-" + String(m+1).padStart(2,"0") + "-" + String(d).padStart(2,"0");
+}
+
+function renderCalendar(){
+  const container = document.getElementById("calendarContainer");
+  const games = filteredGames();
+
+  if(calendarMonth === null){
+    if(games.length){
+      const earliest = games.map(g => g.date).sort()[0];
+      const d = new Date(earliest + "T00:00:00");
+      calendarMonth = d.getMonth();
+      calendarYear = d.getFullYear();
+    } else {
+      const today = new Date();
+      calendarMonth = today.getMonth();
+      calendarYear = today.getFullYear();
+    }
+  }
+
+  const gamesByDate = {};
+  games.forEach(gm => {
+    if(!gamesByDate[gm.date]) gamesByDate[gm.date] = [];
+    gamesByDate[gm.date].push(gm);
+  });
+
+  const firstOfMonth = new Date(calendarYear, calendarMonth, 1);
+  const startWeekday = firstOfMonth.getDay();
+  const daysInMonth = new Date(calendarYear, calendarMonth + 1, 0).getDate();
+  const monthLabel = firstOfMonth.toLocaleDateString(undefined, { month:"long", year:"numeric" });
+  const today = new Date();
+
+  let cellsHtml = "";
+  const weekdayLabels = ["S","M","T","W","T","F","S"];
+  weekdayLabels.forEach(wd => cellsHtml += `<div class="cal-weekday">${wd}</div>`);
+
+  for(let i=0;i<startWeekday;i++){
+    cellsHtml += `<div class="cal-day empty"></div>`;
+  }
+
+  for(let day=1; day<=daysInMonth; day++){
+    const dateStr = ymd(calendarYear, calendarMonth, day);
+    const dayGames = gamesByDate[dateStr] || [];
+    const hasGames = dayGames.length > 0;
+    const isTodayCell = new Date(calendarYear, calendarMonth, day).toDateString() === today.toDateString();
+    const isSelected = dateStr === selectedDate;
+
+    let dotsHtml = "";
+    if(hasGames){
+      const uniquePlayers = [...new Set(dayGames.map(g => g.player))];
+      dotsHtml = '<div class="cal-dots">' + uniquePlayers.map(pid => {
+        const p = PLAYERS.find(pp => pp.id === pid);
+        return `<span class="cal-dot" style="background:${p ? p.color : '#152040'}"></span>`;
+      }).join("") + '</div>';
+    }
+
+    cellsHtml += `<div class="cal-day ${hasGames ? 'has-games' : ''} ${isTodayCell ? 'today' : ''} ${isSelected ? 'selected' : ''}" data-date="${dateStr}">
+      ${day}${dotsHtml}
+    </div>`;
+  }
+
+  container.innerHTML = `
+    <div class="cal-wrap">
+      <div class="cal-nav">
+        <button id="calPrev">‹</button>
+        <span class="cal-month-label">${monthLabel}</span>
+        <button id="calNext">›</button>
+      </div>
+      <div class="cal-grid">${cellsHtml}</div>
+    </div>
+  `;
+
+  document.getElementById("calPrev").addEventListener("click", () => {
+    calendarMonth--;
+    if(calendarMonth < 0){ calendarMonth = 11; calendarYear--; }
+    render();
+  });
+  document.getElementById("calNext").addEventListener("click", () => {
+    calendarMonth++;
+    if(calendarMonth > 11){ calendarMonth = 0; calendarYear++; }
+    render();
+  });
+
+  container.querySelectorAll(".cal-day.has-games").forEach(cell => {
+    cell.addEventListener("click", () => {
+      selectedDate = cell.dataset.date === selectedDate ? null : cell.dataset.date;
+      render();
+    });
+  });
+}
+
+function renderSelectedDay(){
+  const container = document.getElementById("selectedDayContainer");
+  container.innerHTML = "";
+
+  if(!selectedDate){
+    container.innerHTML = '<div class="cal-empty-hint">Tap a highlighted day above to see who\'s playing.</div>';
+    return;
+  }
+
+  const games = filteredGames().filter(gm => gm.date === selectedDate);
+  if(games.length === 0){
+    container.innerHTML = '<div class="cal-empty-hint">No games that day.</div>';
+    return;
+  }
+
+  const heading = document.createElement("div");
+  heading.className = "selected-day-heading";
+  heading.textContent = formatDateHeading(selectedDate);
+  container.appendChild(heading);
+
+  games.forEach(gm => container.appendChild(renderCard(gm)));
 }
 
 function renderCard(gm){
@@ -553,6 +803,7 @@ function renderCard(gm){
 
 async function init(){
   renderFilters();
+  document.getElementById("timeFilters").style.display = "none";
   await loadOverrides();
   const csvGames = await loadCsvIfConfigured();
   if(csvGames && csvGames.length){
