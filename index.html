@@ -340,9 +340,15 @@ const CSV_URL = "YOUR_GOOGLE_SHEET_CSV_URL_HERE";
 const OVERRIDES_CSV_URL = "YOUR_OVERRIDES_SHEET_CSV_URL_HERE";
 
 const PLAYERS = [
-  { id: "olwyn",   name: "Olwyn",   hsTeam: "JJ Pearce Mustangs", color: "#c8102e", mascot: "🐎" },
+  { id: "olwyn",   name: "Olwyn & Ellie L",   hsTeam: "JJ Pearce Mustangs", color: "#4fa8d8", mascot: "🐎" },
   { id: "mckynna", name: "McKynna", hsTeam: "Celina Bobcats",     color: "#e8720c", mascot: "🐆" },
-  { id: "ruby",    name: "Ruby",    hsTeam: "Hockaday",           color: "#0e7a41", mascot: "" }
+  { id: "ruby",    name: "Ruby",    hsTeam: "Hockaday Daisies", color: "#0e7a41", mascot: "🌼" },
+  { id: "argyle",  name: "Sophia & Makenna", hsTeam: "Argyle Eagles", color: "#1a1a1a", mascot: "🦅" },
+  { id: "ellief",  name: "Ellie F", hsTeam: "Marcus Marauders", color: "#c8102e", mascot: "🏇" },
+  { id: "emma",    name: "Emma",    hsTeam: "Plano East Panthers", color: "#f2c811", mascot: "🐈‍⬛" },
+  { id: "camila",  name: "Camila",  hsTeam: "Bishop Lynch Friars", color: "#4a4a4a", mascot: "✝️" },
+  { id: "aniyah",  name: "Aniyah",  hsTeam: "FCAC Patriots", color: "#7a1220", mascot: "🔔" },
+  { id: "harper",  name: "Harper",  hsTeam: "Rockwall Yellowjackets", color: "#c9a227", mascot: "🐝" }
 ];
 // Colors reserved for future teammates if a school's colors clash with
 // the ones above: light blue (#4fa8d8), and add more as needed.
@@ -428,6 +434,112 @@ const GAMES = [
 ];
 
 GAMES.push(...RUBY_GAMES);
+
+  // ---- Sophia & Makenna / Argyle Eagles (Varsity) ----
+  const ARGYLE_GAMES = [
+  g("argyle","2026-08-07","TBA","away","Lake Highlands Scrimmage","Lake Highlands High School","Scrimmage"),
+  g("argyle","2026-08-08","9:00 AM","home","Byron Nelson & Celina Scrimmage","Argyle High School, Argyle, TX","Scrimmage"),
+  g("argyle","2026-08-11","6:30 PM","away","Prosper","Prosper High School",""),
+  g("argyle","2026-08-14","TBA","away","Bishop Lynch","TBD — site not yet confirmed","District match"),
+  g("argyle","2026-08-18","6:00 PM","home","Frisco Centennial","Argyle High School, Argyle, TX",""),
+  g("argyle","2026-08-20","TBA","away","NISD Classic","Northwest ISD","Tournament"),
+  g("argyle","2026-08-25","5:00 PM","home","Aubrey (Dual)","Argyle High School, Argyle, TX","Dual match"),
+  g("argyle","2026-08-25","7:00 PM","home","Decatur (Dual)","Argyle High School, Argyle, TX","Dual match"),
+  g("argyle","2026-08-27","TBA","away","Volleypalooza","Leander, TX","Tournament"),
+  g("argyle","2026-09-02","TBA","away","KSA Invitational","Orlando, FL","Tournament"),
+  g("argyle","2026-09-08","6:00 PM","away","Saginaw","Saginaw High School",""),
+  g("argyle","2026-09-10","6:00 PM","home","Fossil Ridge","Argyle High School, Argyle, TX","Sawyer Camillo Night"),
+  g("argyle","2026-09-15","6:00 PM","away","Eagle Mountain","Eagle Mountain High School",""),
+  g("argyle","2026-09-22","6:00 PM","home","Chisholm Trail","Argyle High School, Argyle, TX","Senior Night — District match"),
+  g("argyle","2026-09-25","5:00 PM","home","Brewer","Argyle High School, Argyle, TX","Homecoming — District match"),
+  g("argyle","2026-09-29","6:00 PM","home","Azle","Argyle High School, Argyle, TX","Teacher Appreciation — District match"),
+  g("argyle","2026-10-01","6:00 PM","home","Saginaw","Argyle High School, Argyle, TX","Pink Out/Youth Night — District match"),
+  g("argyle","2026-10-06","6:00 PM","away","Fossil Ridge","Fossil Ridge High School","District match"),
+  g("argyle","2026-10-09","5:00 PM","home","Eagle Mountain","Argyle High School, Argyle, TX","District match"),
+  g("argyle","2026-10-14","5:00 PM","away","Wichita Falls Memorial","Wichita Falls Memorial High School","Varsity only"),
+  g("argyle","2026-10-16","6:00 PM","away","Chisholm Trail","Chisholm Trail High School","District match"),
+  g("argyle","2026-10-20","6:00 PM","away","Brewer","Brewer High School","District match"),
+  g("argyle","2026-10-23","5:00 PM","away","Azle","Azle High School","District match"),
+  g("argyle","2026-10-29","TBA","away","Bi-District Playoff — opponent TBD","TBD — site not yet confirmed","Playoff round"),
+  g("argyle","2026-11-02","TBA","away","Area Playoff — opponent TBD","TBD — site not yet confirmed","Playoff round"),
+  g("argyle","2026-11-05","TBA","away","Regional Semifinals — opponent TBD","TBD — site not yet confirmed","Playoff round"),
+  g("argyle","2026-11-09","TBA","away","Regional Finals — opponent TBD","TBD — site not yet confirmed","Playoff round"),
+  g("argyle","2026-11-14","TBA","away","State Semifinals — opponent TBD","TBD — site not yet confirmed","Playoff round"),
+  g("argyle","2026-11-21","TBA","away","State Finals — opponent TBD","Garland, TX","Playoff round")
+];
+
+GAMES.push(...ARGYLE_GAMES);
+
+  // ---- Ellie F / Marcus Marauders (Varsity) ----
+  const ELLIEF_GAMES = [
+  g("ellief","2026-08-07","1:00 PM","home","Scrimmages: Liberty, McKinney North","Marcus High School, Flower Mound, TX","Scrimmage"),
+  g("ellief","2026-08-08","9:00 AM","home","Scrimmages: The Colony, Frisco Heritage","Marcus High School, Flower Mound, TX","Scrimmage"),
+  g("ellief","2026-08-11","6:30 PM","away","Colleyville Heritage","Colleyville Heritage High School",""),
+  g("ellief","2026-08-13","TBA","away","Mansfield ISD Tournament","Mansfield ISD","Tournament"),
+  g("ellief","2026-08-18","6:30 PM","away","Plano Senior","Plano Senior High School",""),
+  g("ellief","2026-08-21","TBA","away","Allen Tournament","Allen, TX","Tournament"),
+  g("ellief","2026-08-25","6:30 PM","home","Grapevine","Marcus High School, Flower Mound, TX","Senior Night"),
+  g("ellief","2026-08-28","6:30 PM","home","Plano West","Marcus High School, Flower Mound, TX",""),
+  g("ellief","2026-09-02","TBA","away","KSA Orlando Tournament","Orlando, FL","Tournament"),
+  g("ellief","2026-09-08","6:30 PM","away","Lewisville","Lewisville High School","District Opener"),
+  g("ellief","2026-09-11","6:30 PM","home","Hebron","Marcus High School, Flower Mound, TX",""),
+  g("ellief","2026-09-15","6:30 PM","away","Flower Mound","Flower Mound High School",""),
+  g("ellief","2026-09-18","6:30 PM","home","Braswell","Marcus High School, Flower Mound, TX","Teacher Appreciation/Middle School Night"),
+  g("ellief","2026-09-22","6:30 PM","away","Little Elm","Little Elm High School",""),
+  g("ellief","2026-09-25","6:30 PM","away","Guyer","Guyer High School",""),
+  g("ellief","2026-09-29","6:30 PM","home","Frisco Wakeland","Marcus High School, Flower Mound, TX",""),
+  g("ellief","2026-10-02","6:30 PM","home","Lewisville","Marcus High School, Flower Mound, TX","Pink Out"),
+  g("ellief","2026-10-06","6:30 PM","away","Hebron","Hebron High School",""),
+  g("ellief","2026-10-09","6:30 PM","home","Flower Mound","Marcus High School, Flower Mound, TX","Heart of a Marauder"),
+  g("ellief","2026-10-13","6:30 PM","away","Braswell","Braswell High School",""),
+  g("ellief","2026-10-16","5:30 PM","home","Little Elm","Marcus High School, Flower Mound, TX","Homecoming — Varsity time change"),
+  g("ellief","2026-10-20","6:30 PM","home","Guyer","Marcus High School, Flower Mound, TX","Parent Appreciation Night"),
+  g("ellief","2026-10-23","6:30 PM","away","Frisco Wakeland","Frisco Wakeland High School",""),
+  g("ellief","2026-10-29","TBA","away","Bi-District Playoff — opponent TBD","TBD — site not yet confirmed","Playoff round"),
+  g("ellief","2026-11-02","TBA","away","Area Playoff — opponent TBD","TBD — site not yet confirmed","Playoff round"),
+  g("ellief","2026-11-05","TBA","away","Regional Semifinals — opponent TBD","TBD — site not yet confirmed","Playoff round"),
+  g("ellief","2026-11-09","TBA","away","Regional Finals — opponent TBD","TBD — site not yet confirmed","Playoff round"),
+  g("ellief","2026-11-14","TBA","away","State Semifinals — opponent TBD","TBD — site not yet confirmed","Playoff round"),
+  g("ellief","2026-11-19","TBA","away","State Finals — opponent TBD","TBD — site not yet confirmed","Playoff round")
+];
+
+GAMES.push(...ELLIEF_GAMES);
+
+  // ---- Harper / Rockwall Yellowjackets (Varsity) ----
+  const HARPER_GAMES = [
+  g("harper","2026-08-08","TBA","away","John Paul II — Scrimmage","John Paul II High School","Scrimmage"),
+  g("harper","2026-08-11","6:30 PM","home","Lake Highlands","Rockwall High School, Rockwall, TX",""),
+  g("harper","2026-08-13","TBA","away","Pearland Varsity Tournament","Pearland, TX","Tournament"),
+  g("harper","2026-08-18","6:30 PM","home","Allen","Rockwall High School, Rockwall, TX",""),
+  g("harper","2026-08-21","TBA","away","Allen Varsity Tournament","Allen, TX","Tournament"),
+  g("harper","2026-08-25","6:30 PM","home","Highland Park","Rockwall High School, Rockwall, TX",""),
+  g("harper","2026-08-27","TBA","away","Arete Varsity Tournament","Arete Athletics","Tournament"),
+  g("harper","2026-09-01","6:30 PM","away","Waxahachie","Waxahachie High School",""),
+  g("harper","2026-09-04","5:30 PM","home","Frisco Wakeland","Rockwall High School, Rockwall, TX",""),
+  g("harper","2026-09-08","6:30 PM","away","Royse City","Royse City High School",""),
+  g("harper","2026-09-11","5:30 PM","home","Heath","Rockwall High School, Rockwall, TX",""),
+  g("harper","2026-09-15","6:30 PM","away","Longview","Longview High School",""),
+  g("harper","2026-09-18","5:30 PM","home","Mesquite Horn","Rockwall High School, Rockwall, TX",""),
+  g("harper","2026-09-22","6:30 PM","away","Tyler Legacy","Tyler Legacy High School",""),
+  g("harper","2026-09-25","5:30 PM","away","North Forney","North Forney High School",""),
+  g("harper","2026-09-29","6:30 PM","home","Forney","Rockwall High School, Rockwall, TX",""),
+  g("harper","2026-10-02","5:30 PM","home","Royse City","Rockwall High School, Rockwall, TX",""),
+  g("harper","2026-10-06","6:30 PM","away","Heath","Heath High School",""),
+  g("harper","2026-10-09","5:30 PM","home","Longview","Rockwall High School, Rockwall, TX",""),
+  g("harper","2026-10-13","6:30 PM","away","Mesquite Horn","Mesquite Horn High School",""),
+  g("harper","2026-10-16","5:30 PM","home","Tyler Legacy","Rockwall High School, Rockwall, TX",""),
+  g("harper","2026-10-20","6:30 PM","home","North Forney","Rockwall High School, Rockwall, TX",""),
+  g("harper","2026-10-23","5:30 PM","away","Forney","Forney High School",""),
+  g("harper","2026-10-26","TBA","away","Warm-up Match — opponent TBD","TBD — site not yet confirmed","Postseason"),
+  g("harper","2026-10-29","TBA","away","Bi-District Playoff — opponent TBD","TBD — site not yet confirmed","Playoff round"),
+  g("harper","2026-11-02","TBA","away","Area Playoff — opponent TBD","TBD — site not yet confirmed","Playoff round"),
+  g("harper","2026-11-05","TBA","away","Regional Semifinals — opponent TBD","TBD — site not yet confirmed","Playoff round"),
+  g("harper","2026-11-09","TBA","away","Regional Finals — opponent TBD","TBD — site not yet confirmed","Playoff round"),
+  g("harper","2026-11-14","TBA","away","State Semifinals — opponent TBD","TBD — site not yet confirmed","Playoff round"),
+  g("harper","2026-11-21","TBA","away","State Finals — opponent TBD","Curtis Culwell Center, Garland, TX","Playoff round")
+];
+
+GAMES.push(...HARPER_GAMES);
 
 function g(player, date, time, homeAway, opponent, venue, notes){
   const id = player + "-" + date + "-" + opponent.toLowerCase().replace(/[^a-z0-9]+/g,"");
