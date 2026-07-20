@@ -574,6 +574,44 @@ GAMES.push(...HARPER_GAMES);
 
 GAMES.push(...EMMA_GAMES);
 
+  // ---- Camila / Bishop Lynch Friars (Varsity) ----
+  const CAMILA_GAMES = [
+  g("camila","2026-08-11","6:30 PM","away","Hillcrest","Hillcrest High School, Dallas, TX",""),
+  g("camila","2026-08-13","TBA","away","Stevens","Stevens High School, San Antonio, TX","Time listed as 12:00 AM on schedule \u2014 likely a tournament placeholder"),
+  g("camila","2026-08-18","6:00 PM","away","Adams","Adams High School, Dallas, TX",""),
+  g("camila","2026-09-08","6:00 PM","home","Liberty Christian","Bishop Lynch High School, Dallas, TX",""),
+  g("camila","2026-09-10","6:00 PM","away","Hockaday","The Hockaday School, Dallas, TX",""),
+  g("camila","2026-09-17","6:00 PM","home","John Paul II","Bishop Lynch High School, Dallas, TX","District match"),
+  g("camila","2026-09-22","6:00 PM","away","Prestonwood Christian","Prestonwood Christian Academy, Plano, TX","District match"),
+  g("camila","2026-09-29","6:00 PM","home","Ursuline Academy","Bishop Lynch High School, Dallas, TX","District match"),
+  g("camila","2026-10-01","6:00 PM","away","Legacy Christian Academy","Legacy Christian Academy, Frisco, TX","District match"),
+  g("camila","2026-10-06","6:00 PM","away","John Paul II","John Paul II High School, Plano, TX","District match"),
+  g("camila","2026-10-08","6:00 PM","home","Prestonwood Christian","Bishop Lynch High School, Dallas, TX","District match"),
+  g("camila","2026-10-15","6:00 PM","away","Ursuline Academy","Ursuline Academy, Dallas, TX","District match"),
+  g("camila","2026-10-20","6:00 PM","home","Legacy Christian Academy","Bishop Lynch High School, Dallas, TX","District match")
+];
+
+GAMES.push(...CAMILA_GAMES);
+
+  // ---- Aniyah / FCAC Patriots (Varsity) ----
+  const ANIYAH_GAMES = [
+  g("aniyah","2026-08-20","All Day","away","Sanger Tournament","Sanger, TX","Tournament"),
+  g("aniyah","2026-08-27","5:30 PM","away","Trivium Academy","Trivium Academy",""),
+  g("aniyah","2026-09-01","5:30 PM","away","FCA Flower Mound","Founders Classical Academy Flower Mound, Flower Mound, TX",""),
+  g("aniyah","2026-09-08","6:00 PM","home","Uplift North Hills","Founders Classical Academy of Corinth, Corinth, TX",""),
+  g("aniyah","2026-09-10","All Day","away","St. Jo Tournament","Saint Jo, TX","Tournament"),
+  g("aniyah","2026-09-15","6:00 PM","home","Trivium Academy","Founders Classical Academy of Corinth, Corinth, TX",""),
+  g("aniyah","2026-09-17","6:30 PM","home","Home School","Founders Classical Academy of Corinth, Corinth, TX",""),
+  g("aniyah","2026-09-22","6:00 PM","home","FCA Flower Mound","Founders Classical Academy of Corinth, Corinth, TX",""),
+  g("aniyah","2026-09-24","6:30 PM","away","FCA Lewisville","Founders Classical Academy of Lewisville, Lewisville, TX",""),
+  g("aniyah","2026-10-01","5:30 PM","away","Uplift North Hills","Uplift Education North Hills Preparatory, Fort Worth, TX",""),
+  g("aniyah","2026-10-13","6:00 PM","home","FCA Lewisville","Founders Classical Academy of Corinth, Corinth, TX",""),
+  g("aniyah","2026-10-19","TBA","away","Regionals — opponent TBD","TBD — site not yet confirmed","Playoff round — need to qualify"),
+  g("aniyah","2026-11-06","TBA","away","Postseason — opponent TBD","TBD — site not yet confirmed","Playoff round — need to qualify")
+];
+
+GAMES.push(...ANIYAH_GAMES);
+
 function g(player, date, time, homeAway, opponent, venue, notes){
   const id = player + "-" + date + "-" + opponent.toLowerCase().replace(/[^a-z0-9]+/g,"");
   return { id, player, date, time, homeAway, opponent, venue, notes };
